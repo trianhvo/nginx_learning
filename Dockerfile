@@ -17,8 +17,11 @@ COPY . .
 # Remove default Nginx config
 RUN rm /etc/nginx/sites-enabled/default
 
-# Copy custom Nginx config
+# Copy custom Nginx configs
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
+COPY nginx/locations.conf /etc/nginx/locations.conf
+COPY nginx/custom_headers.conf /etc/nginx/custom_headers.conf
+COPY nginx/header_maps.conf /etc/nginx/header_maps.conf
 
 # Expose port 80
 EXPOSE 80
