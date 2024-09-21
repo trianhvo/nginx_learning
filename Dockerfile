@@ -1,5 +1,8 @@
 FROM node:16
 
+# Install Nginx
+RUN apt-get update && apt-get install -y nginx
+
 WORKDIR /usr/src/app
 
 # Copy package.json and package-lock.json
@@ -11,8 +14,14 @@ RUN npm install
 # Copy the rest of the application code
 COPY . .
 
-# Expose the port the app runs on
-EXPOSE 3000
+# Remove default Nginx config
+RUN rm /etc/nginx/sites-enabled/default
 
-# Command to run the application
-CMD ["node", "src/index.js"]
+# Copy custom Nginx config
+COPY nginx/nginx.conf /etc/nginx/nginx.conf
+
+# Expose port 80
+EXPOSE 80
+
+# Start Nginx and the Node.js app
+CMD service nginx start && node src/index.js
