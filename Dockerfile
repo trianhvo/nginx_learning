@@ -10,7 +10,8 @@ WORKDIR /usr/share/nginx/html
 RUN rm -rf ./*
 
 COPY --from=builder /app/dist .
-COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
+COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
 COPY ./nginx/csp_maps.conf /etc/nginx/includes/csp_maps.conf
 COPY ./nginx/csp_directives.conf /etc/nginx/includes/csp_directives.conf
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
+
+CMD nginx -g 'daemon off;' || (echo "Nginx failed to start. Error log:" && cat /var/log/nginx/error.log)
