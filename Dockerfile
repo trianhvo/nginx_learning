@@ -1,30 +1,16 @@
-FROM node:16
-
-# Install Nginx
-RUN apt-get update && apt-get install -y nginx
-
-WORKDIR /usr/src/app
-
-# Copy package.json and package-lock.json
+FROM node:16 AS builder
+WORKDIR /app
 COPY package*.json ./
-
-# Install dependencies
 RUN npm install
-
-# Copy the rest of the application code
 COPY . .
+RUN npm run build
 
-# Remove default Nginx config
-RUN rm /etc/nginx/sites-enabled/default
-
-# Copy custom Nginx configs
-COPY nginx/nginx.conf /etc/nginx/nginx.conf
-COPY nginx/locations.conf /etc/nginx/locations.conf
-COPY nginx/custom_headers.conf /etc/nginx/custom_headers.conf
-COPY nginx/header_maps.conf /etc/nginx/header_maps.conf
-
-# Expose port 80
+FROM nginx:alpine
+WORKDIR /usr/share/nginx/html
+RUN rm -rf ./*
+COPY --from=builder /app/dist .
+COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
+COPY ./nginx/csp_maps.conf /etc/nginx/includes/csp_maps.conf
+COPY ./nginx/csp_directives.conf /etc/nginx/includes/csp_directives.conf
 EXPOSE 80
-
-# Start Nginx and the Node.js app
-CMD service nginx start && node src/index.js
+CMD ["nginx", "-g", "daemon off;"]
