@@ -27,9 +27,11 @@ RUN rm -rf ./*
 COPY --from=builder /app/dist .
 
 # Copy nginx configuration
+COPY ./nginx/default.conf /etc/nginx/default.conf
 COPY ./nginx/nginx.conf /etc/nginx/conf.d/nginx.conf
 COPY ./nginx/csp_maps.conf /etc/nginx/includes/csp_maps.conf
 COPY ./nginx/csp_directives.conf /etc/nginx/includes/csp_directives.conf
+
 
 # Start nginx
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
