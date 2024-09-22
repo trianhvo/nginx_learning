@@ -19,3 +19,24 @@ An easy way to get started with a Express server with Node.js.
 * `cd node-express-server`
 * `npm install`
 * `npm start`
+
+
+## Server
+# Stop and remove the old container (if it's running)
+sudo docker stop my-express-container
+sudo docker rm my-express-container
+
+# Build the new Docker image
+sudo docker build -t my-express-app .
+
+# Run the new container
+sudo docker run -p 80:80 -d --name my-express-container my-express-app
+
+# Check deploy status
+sudo docker ps -a
+
+# Check docker logs
+sudo docker logs dockerID
+
+# Check files in docker image
+sudo docker exec -it my-express-container /bin/sh
