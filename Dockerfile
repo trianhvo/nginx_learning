@@ -15,9 +15,6 @@ RUN npm install
 RUN npm run test
 RUN npm run build
 
-# Debug: List dist directory after building
-RUN ls -l dist
-
 # Run stage
 FROM nginx:1.21.6-alpine
 WORKDIR /usr/share/nginx/html
@@ -26,10 +23,7 @@ WORKDIR /usr/share/nginx/html
 RUN rm -rf ./*
 
 # Copy the build output to Nginx html folder
-COPY dist/* /usr/share/nginx/html/
-
-# Debug: List contents of /usr/share/nginx/html after copying
-RUN ls -l /usr/share/nginx/html
+# COPY dist/* /usr/share/nginx/html/
 
 RUN mkdir -p /etc/nginx/includes
 
