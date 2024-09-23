@@ -8,7 +8,7 @@ RUN npm config set registry $NPM_REGISTRY
 RUN npm config set color false
 
 # Copy application files
-COPY . .
+COPY dist/* /usr/share/nginx/html/
 
 # Install dependencies and build
 RUN npm install
