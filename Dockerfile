@@ -23,15 +23,17 @@ WORKDIR /usr/share/nginx/html
 # Remove default nginx static assets
 RUN rm -rf ./*
 
-# Copy static assets from builder stage
-COPY --from=builder /app/dist .
-
+# Create necessary directories
 RUN mkdir -p /etc/nginx/includes
-# Copy nginx configuration
+
+# Copy nginx configuration files
 COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
 COPY ./nginx/nginx.conf /etc/nginx/conf.d/nginx.conf
 COPY ./nginx/csp_maps.conf /etc/nginx/includes/csp_maps.conf
 COPY ./nginx/csp_directives.conf /etc/nginx/includes/csp_directives.conf
+
+# Remove the default Nginx configuration file
+RUN rm /etc/nginx/nginx.conf
 
 
 # Start nginx
