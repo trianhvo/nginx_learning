@@ -18,6 +18,6 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.listen(80, '0.0.0.0', () =>
-  console.log(`Example app listening on port 80!`)
+app.listen(3000, '0.0.0.0', () =>
+  console.log(`Example app listening on port 3000!`)
 );
