@@ -23,12 +23,11 @@ WORKDIR /usr/share/nginx/html
 # Remove default nginx static assets
 RUN rm -rf ./*
 
-# Create necessary directories
 RUN mkdir -p /etc/nginx/includes
 
 # Copy nginx configuration files
-COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
-COPY ./nginx/nginx.conf /etc/nginx/conf.d/nginx.conf
+COPY ./nginx/default.conf /etc/nginx/nginx.conf
+COPY ./nginx/custom-nginx.conf /etc/nginx/conf.d/nginx.conf
 COPY ./nginx/csp_maps.conf /etc/nginx/includes/csp_maps.conf
 COPY ./nginx/csp_directives.conf /etc/nginx/includes/csp_directives.conf
 
