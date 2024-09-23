@@ -23,7 +23,7 @@ WORKDIR /usr/share/nginx/html
 RUN rm -rf ./*
 
 # Copy the build output to Nginx html folder
-# COPY dist/* /usr/share/nginx/html/
+COPY dist/* /usr/share/nginx/html/
 
 RUN mkdir -p /etc/nginx/includes
 
