@@ -32,9 +32,6 @@ COPY ./nginx/nginx.conf /etc/nginx/conf.d/nginx.conf
 COPY ./nginx/csp_maps.conf /etc/nginx/includes/csp_maps.conf
 COPY ./nginx/csp_directives.conf /etc/nginx/includes/csp_directives.conf
 
-# Remove the default Nginx configuration file
-RUN rm /etc/nginx/nginx.conf
-
 
 # Start nginx
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
