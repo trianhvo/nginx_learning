@@ -26,8 +26,9 @@ RUN rm -rf ./*
 # Copy static assets from builder stage
 COPY --from=builder /app/dist .
 
+RUN mkdir -p /etc/nginx/includes
 # Copy nginx configuration
-COPY ./nginx/default.conf /etc/nginx/default.conf
+COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
 COPY ./nginx/nginx.conf /etc/nginx/conf.d/nginx.conf
 COPY ./nginx/csp_maps.conf /etc/nginx/includes/csp_maps.conf
 COPY ./nginx/csp_directives.conf /etc/nginx/includes/csp_directives.conf
