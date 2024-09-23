@@ -31,6 +31,8 @@ COPY nginx/nginx.conf /etc/nginx/conf.d/nginx.conf
 COPY nginx/csp_maps.conf /etc/nginx/includes/csp_maps.conf
 COPY nginx/csp_directives.conf /etc/nginx/includes/csp_directives.conf
 
+# Expose port 80
+EXPOSE 80
 
 # Start nginx
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
